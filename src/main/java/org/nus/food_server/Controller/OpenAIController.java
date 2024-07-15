@@ -1,6 +1,5 @@
 package org.nus.food_server.Controller;
 
-
 import java.util.regex.*;
 import org.nus.food_server.DTO.IngredientRequest;
 import org.nus.food_server.DTO.RecipeResponse;
@@ -14,12 +13,11 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/cha")
+@RequestMapping("/chat")
 public class OpenAIController {
 
     @Autowired
     private RestTemplate restTemplate;
-
 
 @PostMapping("/generate-recipe")
 public ResponseEntity<?> generateRecipe(@RequestBody IngredientRequest ingredientRequest) {
