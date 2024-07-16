@@ -12,7 +12,7 @@ public interface RecipeMapper extends BaseMapper<Recipe>{
     @Select("<script>" +
             "SELECT * FROM recipes WHERE " +
             "<foreach collection='ingredients' item='ingredient' open='(' separator=' OR ' close=')'>" +
-            "ingredients LIKE CONCAT('%', #{ingredient}, '%')" +
+            "ingredients ILIKE CONCAT('%', #{ingredient}, '%')" +
             "</foreach>" +
             "</script>")
     List<Recipe> findByIngredients(@Param("ingredients") List<String> ingredients);

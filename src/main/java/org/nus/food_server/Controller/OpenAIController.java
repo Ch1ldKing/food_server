@@ -12,6 +12,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+@CrossOrigin
 @RestController
 @RequestMapping("/chat")
 public class OpenAIController {
@@ -22,6 +23,7 @@ public class OpenAIController {
 @PostMapping("/generate-recipe")
 public ResponseEntity<?> generateRecipe(@RequestBody IngredientRequest ingredientRequest) {
     List<String> ingredients = ingredientRequest.getIngredients();
+    System.out.println("Ingredients: " + ingredients);
 
     if (ingredients == null || ingredients.isEmpty()) {
         Map<String, Object> errorResponse = new HashMap<>();
@@ -45,7 +47,7 @@ public ResponseEntity<?> generateRecipe(@RequestBody IngredientRequest ingredien
 
     try {
         String jsonString = response.getBody();
-//        System.out.println("Raw JSON Response: " + jsonString);
+        System.out.println("Raw JSON Response: " + jsonString);
 
         // 提取内部的 JSON 字符串
         Pattern recipePattern = Pattern.compile("\\{\"recipe\":\"\\{(.+?)\\}\\s*\"\\}");
@@ -54,14 +56,14 @@ public ResponseEntity<?> generateRecipe(@RequestBody IngredientRequest ingredien
 
         if (recipeMatcher.find()) {
             innerJson = recipeMatcher.group(1).replace("\\n", "\n").replace("\\\"", "\"");
-//            System.out.println("Extracted Inner JSON: " + innerJson);
+            System.out.println("Extracted Inner JSON: " + innerJson);
         } else {
             System.out.println("No match for inner JSON");
         }
 
         // 使用正则表达式提取 Dish_name 和 Process
-        Pattern dishNamePattern = Pattern.compile("Dish_name:\"(.*?)\"");
-        Pattern processPattern = Pattern.compile("Process:\"(.*?)\"", Pattern.DOTALL);
+        Pattern dishNamePattern = Pattern.compile("dishName:\"(.*?)\"");
+        Pattern processPattern = Pattern.compile("process:\"(.*?)\"", Pattern.DOTALL);
 
         Matcher dishNameMatcher = dishNamePattern.matcher(innerJson);
         Matcher processMatcher = processPattern.matcher(innerJson);
