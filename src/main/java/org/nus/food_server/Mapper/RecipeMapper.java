@@ -11,7 +11,7 @@ import java.util.List;
 public interface RecipeMapper extends BaseMapper<Recipe>{
     @Select("<script>" +
             "SELECT * FROM recipes WHERE " +
-            "<foreach collection='ingredients' item='ingredient' open='(' separator=' OR ' close=')'>" +
+            "<foreach collection='ingredients' item='ingredient' separator=' AND '>" +
             "ingredients ILIKE CONCAT('%', #{ingredient}, '%')" +
             "</foreach>" +
             "</script>")

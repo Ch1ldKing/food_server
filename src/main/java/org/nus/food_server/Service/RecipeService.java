@@ -26,7 +26,7 @@ public class RecipeService {
     }
 
     public String getRecommendations(int recipeId) {
-        String url = "http://localhost:5000/recommend";
+        String url = "http://localhost:6000/recommend";
         Map<String, Integer> request = new HashMap<>();
         request.put("recipe_id", recipeId);
 
